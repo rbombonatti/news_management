@@ -3,9 +3,9 @@
 </script>
 
 <template>
-    <span class="bg-gray-200 py-4 text-center">
-        <p class="text-gray-500">DESENVOLVIDO POR PROGRAMADOR</p>
-    </span>
+    <div class="bg-gray-200 py-4 text-center">
+        <p class="text-gray-500">@ rb</p>
+    </div>
 </template>
 
 <style scoped>
