@@ -13,13 +13,10 @@ const props = defineProps({
 <template>
     <Head title="Home" />
     <div class="min-h-screen bg-gray-100">
-        <!-- Navbar -->
         <NavBar />
 
-        <!-- Cards -->
         <NewsCard :newsList="newsList" />
 
-        <!-- Footer -->
         <Footer />
 
     </div>

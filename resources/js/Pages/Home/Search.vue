@@ -16,8 +16,9 @@ const props = defineProps({
 </script>
 
 <template>
+
     <Head title="Busca" />
-    <NavBar />
+    <NavBar :search="search" />
     <section class="container mx-auto py-8 px-4">
 
         <h1 class="text-3xl font-bold mb-8 text-gray-800">Resultados da Busca - <i class="text-blue-400">{{ search }}</i></h1>
