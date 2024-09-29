@@ -1,5 +1,5 @@
 <script setup>
-import {Head, Link} from "@inertiajs/vue3";
+import {Link} from "@inertiajs/vue3";
 import Search from "@/Components/Search.vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 
