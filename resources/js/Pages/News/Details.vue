@@ -1,11 +1,11 @@
 <script setup>
 import NavBar from "@/Components/NavBar.vue";
-import NewsCard from "@/Components/NewsCard.vue";
+import NewsDetails from "@/Components/NewsDetails.vue";
 import Footer from "@/Components/Footer.vue";
 import { Head } from "@inertiajs/vue3";
 
 const props = defineProps({
-    newsList: Array,
+    news: Object,
 })
 
 </script>
@@ -16,8 +16,8 @@ const props = defineProps({
         <!-- Navbar -->
         <NavBar />
 
-        <!-- Cards -->
-        <NewsCard :newsList="newsList" />
+        <!-- Details -->
+        <NewsDetails :news="news" />
 
         <!-- Footer -->
         <Footer />
