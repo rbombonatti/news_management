@@ -9,7 +9,7 @@ const props = defineProps({
         required: true,
     },
     search: {
-        type: Object,
+        type: String,
     }
 })
 
