@@ -1,0 +1,23 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\News;
+use App\Models\Tag;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class NewsTagFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'news_id' => News::all()->random()->id,
+            'tag_id' => Tag::all()->random()->id,
+        ];
+    }
+}
