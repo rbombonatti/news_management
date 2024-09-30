@@ -18,9 +18,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Category::class)->constrained();
             $table->string('title');
-            $table->string('slug')->unique();
-            $table->text('content');
+            $table->text('description');
             $table->timestamps();
+            $table->softDeletes();
         });
 
     }

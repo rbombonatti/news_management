@@ -1,6 +1,6 @@
 <template>
     <a @click="destroySubject" class="bg-red-500 hover:bg-red-700 text-white font-bold p-2 px-4 rounded mb-2 mr-2 delete-button">
-        {{ 'delete' }}
+        {{ 'Delete' }}
     </a>
 </template>
 
@@ -19,21 +19,21 @@ const props = defineProps({
 const form = useForm({});
 const destroySubject = () => {
     Swal.fire({
-        title: t('confirm_delete'),
-        text: t('undo_delete'),
+        title: 'Confirma a exclusão?',
+        text: 'Não será possível desfazer.',
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: t('delete_yes'),
-        cancelButtonText: t('delete_no'),
+        confirmButtonText: 'Sim, pode excluir',
+        cancelButtonText: 'Não',
     }).then((result) => {
         if (result.isConfirmed) {
             form.delete(route(`${props.routeName}.destroy`, props.subjectId), {
                 onSuccess: () => {
                     Swal.fire({
-                        title: 'deleted',
-                        text: 'deleted_text',
+                        title: 'Feito!',
+                        text: 'O registro foi excluído!',
                         icon: "success",
                     });
                 },

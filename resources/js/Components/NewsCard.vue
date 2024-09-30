@@ -32,7 +32,7 @@ const props = defineProps({
 
                 <!-- Conteúdo -->
                 <p class="text-gray-600 mb-6 flex-grow">
-                    {{ news.content }}
+                    {{ news.description }}
                 </p>
 
                 <!-- Tags -->

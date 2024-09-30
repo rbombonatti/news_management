@@ -1,7 +1,6 @@
 <script setup>
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { useI18n } from 'vue-i18n';
 import { Head, useForm } from "@inertiajs/vue3";
 import Header from "@/Components/Header.vue"
 import TextInput from "@/Components/TextInput.vue";
@@ -14,23 +13,21 @@ import {useToast} from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
 import FormChanged from "@/Components/FormChanged.vue";
 
-const { t } = useI18n();
 const toast = useToast();
-const routeName = 'doctors';
+const routeName = 'news';
 
 const props = defineProps({
-    roles: Object,
-    specialties: Array,
+    categories: Object,
+    tags: Array,
     errors: Object,
 })
 
 
 const form = useForm({
-    first_name: '',
-    last_name: '',
-    role_id: '',
-    thumbnail: '',
-    specialties: [],
+    title: '',
+    description: '',
+    category_id: '',
+    tags: [],
 });
 const formErrors = ref({});
 const validateForm = () => {
@@ -38,16 +35,16 @@ const validateForm = () => {
     let isValid = true;
     formErrors.value = {};
 
-    if (!form.first_name) {
-        formErrors.value.first_name = t('required');
+    if (!form.title) {
+        formErrors.value.title = 'Obrigatório';
         isValid = false;
     }
-    if (!form.last_name) {
-        formErrors.value.last_name = t('required');
+    if (!form.description) {
+        formErrors.value.description = 'Obrigatório';
         isValid = false;
     }
-    if (!form.role_id) {
-        formErrors.value.role_id = t('required');
+    if (!form.category_id) {
+        formErrors.value.category_id = 'Obrigatório';
         isValid = false;
     }
 
@@ -56,7 +53,7 @@ const validateForm = () => {
 const store = () => {
     if (validateForm()) {
         form.post(route(`${routeName}.store`), {
-            onSuccess: () => toast.success(t(`${routeName}_created`)),
+            onSuccess: () => toast.success('Notícia criada!'),
         });
     }
 }
@@ -64,51 +61,53 @@ const store = () => {
 </script>
 <template>
     <AuthenticatedLayout>
-        <Head :title="t(`${routeName}`)" />
+        <Head :title="'Criar Notícia'" />
         <div class="py-1">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <Header :title="t(`${routeName}`)" />
+                <Header :title="'Criar Notícia'" />
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-b-lg">
                     <div class="p-6 text-gray-900">
                         <form @submit.prevent="store">
                             <div class="flex flex-wrap -mx-3 mb-6">
-                                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                    <InputLabel for="first_name" :value="t('first_name')" />
+                                <div class="w-full px-3 mb-6 md:mb-0">
+                                    <InputLabel for="title" :value="'Título'" />
                                     <TextInput
-                                        id="first_name"
-                                        v-model="form.first_name"
+                                        id="title"
+                                        v-model="form.title"
                                         type="text"
                                         required
                                     />
-                                    <InputError v-if="formErrors.first_name || errors.first_name" :message="formErrors.first_name || errors.first_name" />
+                                    <InputError v-if="formErrors.title || errors.title" :message="formErrors.title || errors.title" />
                                 </div>
-                                <div class="w-full md:w-1/2 px-3">
-                                    <InputLabel for="last_name" :value="t('last_name')" />
+                            </div>
+                            <div class="flex flex-wrap -mx-3 mb-6">
+                                <div class="w-full px-3 mb-6 md:mb-0">
+                                    <InputLabel for="description" :value="'Conteúdo'" />
                                     <TextInput
-                                        id="last_name"
-                                        v-model="form.last_name"
+                                        id="description"
+                                        v-model="form.description"
                                         type="text"
                                         required
-                                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     />
-                                    <InputError v-if="formErrors.last_name || errors.last_name" :message="formErrors.last_name || errors.last_name" />
+                                    <InputError v-if="formErrors.description || errors.description" :message="formErrors.description || errors.description" />
                                 </div>
+
                                 <div class="w-full px-3 mb-6 mt-6 md:mb-0">
-                                    <InputLabel for="role" :value="t('role')" />
-                                    <SelectInput id="role" v-model="form.role_id" :options="roles" value-key="id" text-key="title" />
-                                    <InputError v-if="formErrors.role_id || errors.role_id " :message="formErrors.role_id || errors.role_id" />
+                                    <InputLabel for="category" :value="'Categoria'" />
+                                    <SelectInput id="category" v-model="form.category_id" :options="categories" value-key="id" text-key="title" />
+                                    <InputError v-if="formErrors.category_id || errors.category_id" :message="formErrors.category_id || errors.category_id" />
                                 </div>
                                 <div class="w-full px-3 mb-6 md:mb-0 mt-4">
-                                    <InputLabel for="specialties" :value="t('specialties')"/>
+                                    <InputLabel for="tags" :value="'Tags'"/>
                                     <div class="grid grid-cols-3 gap-4">
-                                        <div v-for="specialty in specialties" :key="specialty.id">
+                                        <div v-for="tag in tags" :key="tags.id">
                                             <input
                                                 type="checkbox"
-                                                :id="specialty.id"
-                                                :value="specialty.id"
-                                                v-model="form.specialties"
+                                                :id="tag.id"
+                                                :value="tag.id"
+                                                v-model="form.tags"
                                             />
-                                            {{ specialty.title }}
+                                            {{ tag.slug }}
                                         </div>
                                     </div>
                                 </div>

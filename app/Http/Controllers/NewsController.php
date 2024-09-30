@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewsRequest;
+use App\Models\Category;
 use App\Models\News;
+use App\Models\Tag;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class NewsController extends Controller
 {
@@ -16,7 +21,7 @@ class NewsController extends Controller
         if ($search !== null) {
             $news->where(function ($query) use ($search) {
                 $query->where('title', 'LIKE', "%{$search}%")
-                    ->orWhere('content', 'LIKE', "%{$search}%");
+                    ->orWhere('description', 'LIKE', "%{$search}%");
             })
             ->orWhereHas('category', function ($query) use ($search) {
                 $query->where('title', 'LIKE', "%{$search}%")
@@ -34,33 +39,60 @@ class NewsController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+        return Inertia::render('News/Create', ['categories' => $categories, 'tags' => $tags]);
     }
 
-    public function store(Request $request)
+    public function store(NewsRequest $request): RedirectResponse
     {
-        //
+        $news = News::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+        ]);
+
+        $news->tags()->attach($request->input('tags'));
+        return redirect('/news');
     }
 
-    public function show(News $news)
+    public function show(News $news): Response
     {
-        //
+        $news = News::with(['category', 'tags'])->findOrFail($news->id);
+        return Inertia::render('News/Show', ['news' => $news]);
     }
 
     public function edit(News $news)
     {
-        //
+        $news = News::with('category', 'tags')->findOrFail($news->id);
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return Inertia::render('News/Edit',
+            [
+                'news' => $news,
+                'categories' => $categories,
+                'tags' => $tags,
+                'newsTags' => $news->tags->pluck('id')->toArray(),
+            ]);
     }
 
-    public function update(Request $request, News $news)
+    public function update(NewsRequest $request, News $news)
     {
-        //
+        $news->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+        ]);
+
+        $news->tags()->sync($request->input('tags'));
+        return redirect('/news');
     }
 
-    public function destroy(News $news)
+    public function destroy(News $news): void
     {
-        //
+        $news->delete();
     }
 }

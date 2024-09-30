@@ -33,7 +33,7 @@ class HomeController extends Controller
         $results = News::with(['category:id,title,slug', 'tags:id,slug'])
             ->where(function ($query) use ($search) {
                 $query->where('title', 'LIKE', "%{$search}%")
-                    ->orWhere('content', 'LIKE', "%{$search}%");
+                    ->orWhere('description', 'LIKE', "%{$search}%");
             })
             ->orWhereHas('category', function ($query) use ($search) {
                 $query->where('title', 'LIKE', "%{$search}%")
