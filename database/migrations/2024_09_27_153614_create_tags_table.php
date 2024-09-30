@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique();
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('news_tag', function (Blueprint $table) {

@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class News extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'slug', 'content'];
+    use SoftDeletes;
+    protected $fillable = ['title', 'description', 'category_id'];
     protected $table = 'news';
 
     public function tags(): BelongsToMany

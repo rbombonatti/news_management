@@ -22,9 +22,9 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('news.index')">
                                     <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
+                                        class="block h-10 w-auto fill-current text-gray-800"
                                     />
                                 </Link>
                             </div>
@@ -34,10 +34,30 @@ const showingNavigationDropdown = ref(false);
                                 class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
                             >
                                 <NavLink
-                                    :href="route('dashboard')"
-                                    :active="route().current('dashboard')"
+                                    :href="route('news.index')"
+                                    :active="route().current('news.index')"
                                 >
-                                    Dashboard
+                                    Notícias
+                                </NavLink>
+                            </div>
+                            <div
+                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                            >
+                                <NavLink
+                                    :href="route('categories.index')"
+                                    :active="route().current('categories.index')"
+                                >
+                                    Categorias
+                                </NavLink>
+                            </div>
+                            <div
+                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                            >
+                                <NavLink
+                                    :href="route('tags.index')"
+                                    :active="route().current('tags.index')"
+                                >
+                                    Tags
                                 </NavLink>
                             </div>
                         </div>
@@ -141,10 +161,10 @@ const showingNavigationDropdown = ref(false);
                 >
                     <div class="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
-                            :href="route('dashboard')"
-                            :active="route().current('dashboard')"
+                            :href="route('news.index')"
+                            :active="route().current('news.index')"
                         >
-                            Dashboard
+                            Notícias
                         </ResponsiveNavLink>
                     </div>
 

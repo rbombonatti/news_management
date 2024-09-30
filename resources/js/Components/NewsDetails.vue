@@ -17,7 +17,7 @@ const goBack = () => {
             </p>
 
             <div class="text-gray-700 leading-relaxed mb-6">
-                <p v-html="news.content"></p>
+                <p v-html="news.description"></p>
             </div>
 
             <div v-if="news.tags.length">
