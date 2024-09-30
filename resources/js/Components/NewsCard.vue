@@ -24,7 +24,7 @@ const props = defineProps({
                         </span>
                     </div>
                     <h2 class="text-xl font-bold mb-4 truncate" style="max-height: 3em; overflow: hidden;">
-                        <Link :href="route('news.details', news.id)">
+                        <Link :href="route('home.details', news.id)">
                             {{ news.title }}
                         </Link>
                     </h2>
@@ -42,7 +42,7 @@ const props = defineProps({
 
                 <!-- Botão Acessar -->
                 <div class="flex justify-center mt-6">
-                    <Link :href="route('news.details', news.id)" class="px-4 py-2 bg-gray-300 text-black rounded-lg hover:bg-blue-600 transition-colors duration-300">
+                    <Link :href="route('home.details', news.id)" class="px-4 py-2 bg-gray-300 text-black rounded-lg hover:bg-blue-600 transition-colors duration-300">
                         Acessar
                     </Link>
                 </div>

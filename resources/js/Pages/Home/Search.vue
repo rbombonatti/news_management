@@ -50,7 +50,7 @@ const props = defineProps({
 
                 <!-- Botão Ver Mais -->
                 <div class="flex justify-end mt-4">
-                    <Link :href="route('news.details', news.id)" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
+                    <Link :href="route('home.details', news.id)" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
                         Ver mais
                     </Link>
                 </div>

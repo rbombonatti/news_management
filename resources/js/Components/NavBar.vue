@@ -16,7 +16,7 @@ const props = defineProps({
         <div class="container mx-auto flex justify-between items-center">
             <div class="w-1/3">
                 <h1 class="text-lg font-bold">
-                    <Link :href="route('home')" class="hover:text-gray-600">
+                    <Link :href="route('home.index')" class="hover:text-gray-600">
                     <ApplicationLogo />
                     </Link>
                 </h1>
@@ -25,7 +25,7 @@ const props = defineProps({
                 <nav>
                     <ul class="flex space-x-4">
                         <li><a href="#" class="hover:text-gray-600">Cadastrar Notícias</a></li>
-                        <Link :href="route('home')" class="hover:text-gray-600">Exibir Notícias</Link>
+                        <Link :href="route('home.index')" class="hover:text-gray-600">Exibir Notícias</Link>
                     </ul>
                 </nav>
             </div>

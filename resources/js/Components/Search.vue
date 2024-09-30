@@ -18,7 +18,7 @@ watch(search, (newValue) => {
 })
 
 const handleSubmit = () => {
-    form.get(route(`news.search`,
+    form.get(route(`home.search`,
         {
             'search': form.search,
         }
