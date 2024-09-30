@@ -29,7 +29,7 @@ const props = defineProps({
                 <Header :title="'Notícias'" />
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-b-lg">
                     <div class="p-6 text-gray-900">
-                        <SearchBar :placeholder="`Busca por notícias`" :routeName="routeName" :modelValue="request.search" />
+                        <SearchBar :placeholder="`Busca por notícia`" :routeName="routeName" :modelValue="request.search" />
                         <div class="hidden lg:flex lg:gap-x-12">
                             <Link :href="route(`${routeName}.create`)" class="edit-button hover:bg-blue-700 mb-4">Criar Novo</Link>
                         </div>
@@ -47,7 +47,7 @@ const props = defineProps({
                                 </div>
                             </div>
                         </div>
-                        <div v-if="(!newsList.total)" class="text-sm text-center mt-4 mb-4">Sem resultados</div>
+                        <div v-if="(!newsList.total)" class="text-sm text-center mt-4 mb-4">Nenhum resultado encontrado!</div>
                     </div>
                 </div>
                 <Pagination :pagination="newsList"></Pagination>

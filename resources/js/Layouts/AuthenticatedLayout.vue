@@ -50,6 +50,16 @@ const showingNavigationDropdown = ref(false);
                                     Categorias
                                 </NavLink>
                             </div>
+                            <div
+                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                            >
+                                <NavLink
+                                    :href="route('tags.index')"
+                                    :active="route().current('tags.index')"
+                                >
+                                    Tags
+                                </NavLink>
+                            </div>
                         </div>
 
                         <div class="hidden sm:ms-6 sm:flex sm:items-center">
