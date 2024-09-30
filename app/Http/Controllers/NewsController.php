@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\NewsRequest;
+use App\Http\Requests\News\StoreNewsRequest;
+use App\Http\Requests\News\UpdateNewsRequest;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Tag;
@@ -33,7 +34,7 @@ class NewsController extends Controller
         ]);
     }
 
-    public function store(NewsRequest $request): RedirectResponse
+    public function store(StoreNewsRequest $request): RedirectResponse
     {
         $news = News::create($request->validated());
         $news->tags()->attach($request->input('tags'));
@@ -57,7 +58,7 @@ class NewsController extends Controller
         ]);
     }
 
-    public function update(NewsRequest $request, News $news): RedirectResponse
+    public function update(UpdateNewsRequest $request, News $news): RedirectResponse
     {
         $news->update($request->validated());
 

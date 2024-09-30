@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
+use App\Http\Requests\Tag\StoreTagRequest;
 use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,15 +32,9 @@ class CategoryController extends Controller
         return Inertia::render('Category/Create');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreCategoryRequest $request): RedirectResponse
     {
-        $request->validate([
-            'title' => 'string|required',
-        ]);
-
-        Category::create([
-            'title' => $request->title
-        ]);
+        Category::create($request->validated());
         return redirect()->route('categories.index');
     }
 
@@ -56,16 +53,9 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function update(Request $request, Category $category): RedirectResponse
+    public function update(UpdateCategoryRequest $request, Category $category): RedirectResponse
     {
-        $request->validate([
-            'title' => 'string|required',
-        ]);
-
-        $category->update([
-            'title' => $request->title
-        ]);
-
+        $category->update($request->validated());
         return redirect()->route('categories.index');
     }
 
