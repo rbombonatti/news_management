@@ -23,8 +23,8 @@ class StoreNewsRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:news',
-            'description' => 'required|string',
+            'description' => 'required|string|max:255',
+            'category_id' => 'required|integer|exists:categories,id',
         ];
     }
 }

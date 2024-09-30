@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Tag\UpdateTagRequest;
+use App\Http\Requests\Tag\StoreTagRequest;
 use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,11 +14,11 @@ class TagController extends Controller
 {
     public function index(Request $request): Response
     {
-        $tags = Tag::query();
-        if ($request->get('search') !== null) {
-            $tags->where('slug', 'like', '%' . $request->get('search') . '%');
-        }
-        $tags = $tags->paginate(4);
+        $search = $request->get('search');
+        $tags = Tag::when($search, function ($query, $search) {
+            $query->where('slug', 'like', '%' . $search . '%');
+        })->paginate(4);
+
         return Inertia::render('Tag/Index',
             [
                 'tags' => $tags,
@@ -29,43 +31,25 @@ class TagController extends Controller
         return Inertia::render('Tag/Create');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreTagRequest $request): RedirectResponse
     {
-        $request->validate([
-            'slug' => 'string|required',
-        ]);
-
-        Tag::create([
-            'slug' => $request->slug
-        ]);
+        Tag::create($request->validated());
         return redirect()->route('tags.index');
     }
 
     public function show(Tag $tag): Response
     {
-        return Inertia::render('Tag/Show',
-            [
-                'tag' => $tag
-            ]);
+        return Inertia::render('Tag/Show', ['tag' => $tag]);
     }
 
     public function edit(Tag $tag): Response
     {
-        return Inertia::render('Tag/Edit', [
-            'tag' => $tag
-        ]);
+        return Inertia::render('Tag/Edit', ['tag' => $tag]);
     }
 
-    public function update(Request $request, Tag $tag): RedirectResponse
+    public function update(UpdateTagRequest $request, Tag $tag): RedirectResponse
     {
-        $request->validate([
-            'slug' => 'string|required',
-        ]);
-
-        $tag->update([
-            'slug' => $request->slug
-        ]);
-
+        $tag->update($request->validated());
         return redirect()->route('tags.index');
     }
 

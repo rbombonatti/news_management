@@ -63,7 +63,7 @@ const update = () => {
                                         type="text"
                                         required
                                         />
-                                    <InputError v-if="formErrors.slug || errors.slug" :message="formErrors.slug || errors.title" />
+                                    <InputError v-if="formErrors.slug || errors.slug" :message="formErrors.slug || errors.slug" />
                                 </div>
                             </div>
                             <FooterActions :routeName="routeName" />
