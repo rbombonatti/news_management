@@ -13,7 +13,7 @@ class News extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['title', 'slug', 'description', 'category_id'];
+    protected $fillable = ['title', 'description', 'category_id'];
     protected $table = 'news';
 
     public function tags(): BelongsToMany

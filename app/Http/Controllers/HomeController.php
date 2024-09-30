@@ -12,7 +12,15 @@ class HomeController extends Controller
 {
     public function index(): Response
     {
-        $newsList = News::with('category', 'tags')->get();
+        $newsList = News::with([
+            'category' => function ($query) {
+                $query->withTrashed();
+            },
+            'tags' => function ($query) {
+                $query->withTrashed();
+            },
+        ])->get();
+
         return Inertia::render('Home/Home', [
             'newsList' => $newsList,
         ]);
@@ -20,7 +28,14 @@ class HomeController extends Controller
 
     public function details(News $news): Response
     {
-        $news = News::with(['category', 'tags'])->findOrFail($news->id);
+        $news = News::with([
+            'category' => function ($query) {
+                $query->withTrashed();
+            },
+            'tags' => function ($query) {
+                $query->withTrashed();
+            },
+        ])->findOrFail($news->id);
         return Inertia::render('Home/Details',
             [
                 'news' => $news,
@@ -30,14 +45,13 @@ class HomeController extends Controller
 
     public function search($search)
     {
-        $results = News::with(['category:id,title,slug', 'tags:id,slug'])
+        $results = News::with(['category:id,title', 'tags:id,slug'])
             ->where(function ($query) use ($search) {
                 $query->where('title', 'LIKE', "%{$search}%")
                     ->orWhere('description', 'LIKE', "%{$search}%");
             })
             ->orWhereHas('category', function ($query) use ($search) {
-                $query->where('title', 'LIKE', "%{$search}%")
-                    ->orWhere('slug', 'LIKE', "%{$search}%");
+                $query->where('title', 'LIKE', "%{$search}%");
             })
             ->orWhereHas('tags', function ($query) use ($search) {
                 $query->where('slug', 'LIKE', "%{$search}%");

@@ -15,26 +15,11 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->insert(
             [
-                [
-                    'title' => 'Geral',
-                    'slug' => 'geral',
-                ],
-                [
-                    'title' => 'Economia',
-                    'slug' => 'economia',
-                ],
-                [
-                    'title' => 'Política',
-                    'slug' => 'politica',
-                ],
-                [
-                    'title' => 'Esportes',
-                    'slug' => 'esportes',
-                ],
-                [
-                    'title' => 'Internacional',
-                    'slug' => 'internacional',
-                ]
+                ['title' => 'Geral'],
+                ['title' => 'Economia'],
+                ['title' => 'Política'],
+                ['title' => 'Esportes'],
+                ['title' => 'Internacional']
             ]
         );
     }

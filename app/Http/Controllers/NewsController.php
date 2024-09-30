@@ -16,28 +16,36 @@ class NewsController extends Controller
 
     public function index(Request $request)
     {
-        $news = News::with(['category:id,title,slug', 'tags:id,slug']);
+        $news = News::with([
+            'category' => function ($query) {
+                $query->withTrashed()->select('id', 'title'); // Inclui as categorias soft-deleted
+            },
+            'tags:id,slug'
+        ]);
+
         $search = $request->get('search');
+
         if ($search !== null) {
             $news->where(function ($query) use ($search) {
                 $query->where('title', 'LIKE', "%{$search}%")
                     ->orWhere('description', 'LIKE', "%{$search}%");
             })
             ->orWhereHas('category', function ($query) use ($search) {
-                $query->where('title', 'LIKE', "%{$search}%")
-                    ->orWhere('slug', 'LIKE', "%{$search}%");
+                $query->withTrashed()->where('title', 'LIKE', "%{$search}%");
             })
             ->orWhereHas('tags', function ($query) use ($search) {
-                $query->where('slug', 'LIKE', "%{$search}%");
+                $query->withTrashed()->where('slug', 'LIKE', "%{$search}%");
             });
         }
 
         $newsList = $news->paginate(4);
+
         return Inertia::render('News/Index', [
             'newsList' => $newsList,
             'request' => $request,
         ]);
     }
+
 
     public function create(): Response
     {
@@ -60,7 +68,14 @@ class NewsController extends Controller
 
     public function show(News $news): Response
     {
-        $news = News::with(['category', 'tags'])->findOrFail($news->id);
+        $news = News::with(['category', 'tags'])->findOrFail($news->id)
+            ->orWhereHas('category', function ($query) {
+                $query->withTrashed();
+            })
+            ->orWhereHas('tags', function ($query) {
+                $query->withTrashed();
+            });
+
         return Inertia::render('News/Show', ['news' => $news]);
     }
 
@@ -79,7 +94,7 @@ class NewsController extends Controller
             ]);
     }
 
-    public function update(NewsRequest $request, News $news)
+    public function update(NewsRequest $request, News $news): RedirectResponse
     {
         $news->update([
             'title' => $request->title,
