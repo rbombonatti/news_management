@@ -24,7 +24,7 @@ const props = defineProps({
             <div class="w-1/3">
                 <nav>
                     <ul class="flex space-x-4">
-                        <li><a href="#" class="hover:text-gray-600">Cadastrar Notícias</a></li>
+                        <li><Link :href="route('news.index')" class="hover:text-gray-600">Cadastrar Notícias</Link></li>
                         <Link :href="route('home.index')" class="hover:text-gray-600">Exibir Notícias</Link>
                     </ul>
                 </nav>
