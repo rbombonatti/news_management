@@ -7,10 +7,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
-
-
 Route::get('/home/{news}', [HomeController::class, 'details'])->name('home.details');
 Route::get('/search/{search}', [HomeController::class, 'search'])->name('home.search');
 
